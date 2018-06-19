@@ -1,10 +1,12 @@
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: [__dirname + "/../entry.js"],
-  // devtool makes your chrome show where the error is aside from pointing the error in your bundle file
-  devtool: "inline-source-map",
+  // devtool: "source-map" make all your loaders be allowed to create a map during compile
+  // good for debugging
+  devtool: "source-map",
   // tells where your webpack-dev-server where to watch for changes
   devServer: {
     contentBase: __dirname + "/../public/"
@@ -28,8 +30,30 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        loader:
-          "style-loader!css-loader!resolve-url-loader!postcss-loader!sass-loader"
+        use: [
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: "resolve-url-loader"
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: () => [require("autoprefixer")]
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -68,11 +92,8 @@ module.exports = {
     ]
   },
   plugins: [
-    require("autoprefixer"),
     new MiniCssExtractPlugin({
-      // both options are optional
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "assets/css/[name].css"
     })
   ]
 };

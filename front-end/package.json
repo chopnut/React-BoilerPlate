@@ -4,8 +4,8 @@
   "description": "boilerplate",
   "main": "index.js",
   "scripts": {
-    "dev":   "webpack-dev-server --mode development --config ./.config/webpack.base.js",
-    "build": "webpack-dev-server --mode production  --config ./.config/webpack.base.js"
+    "dev": "set NODE_ENV=development&&webpack-dev-server --mode development --config ./.config/webpack.base.js",
+    "build": "set NODE_ENV=production&&webpack --mode production  --config ./.config/webpack.base.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
+    "resolve-url-loader": "^2.3.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
