@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: [__dirname + "/../entry.js"],
@@ -66,5 +67,12 @@ module.exports = {
       }
     ]
   },
-  plugins: [require("autoprefixer")]
+  plugins: [
+    require("autoprefixer"),
+    new MiniCssExtractPlugin({
+      // both options are optional
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
+  ]
 };
