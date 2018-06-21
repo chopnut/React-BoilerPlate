@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "reactboilerplate",
   "version": "1.0.0",
-  "description": "boilerplate",
+  "description": "React SPA boilerplate",
   "main": "index.js",
   "scripts": {
     "dev": "set NODE_ENV=development&&webpack-dev-server --mode development --config ./.config/webpack.base.js",
