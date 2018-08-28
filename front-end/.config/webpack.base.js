@@ -1,4 +1,3 @@
-const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
@@ -19,8 +18,8 @@ module.exports = {
     used by plugins , mainly for production.
     publicPath: "http://mysite.com/"
     for eg. in your css you have url(./img.jpg) => url(http://mysite.com)
-    */
     publicPath: "/",
+    */
     filename: "assets/js/bundle.js"
   },
   resolve: {
