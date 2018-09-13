@@ -1,5 +1,17 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== "production";
+/*
+    WEBPACK CONFIGURATION VARIABLES
+*/
+// ========================================================
+// DEVELOPER TO CHANGE 
+// ========================================================
+
+const hostURL  = "192.168.70.22";
+const hostPORT = "8080";
+
+//- -------------------------------------------------------
+
+const MiniCssExtractPlugin  = require("mini-css-extract-plugin");
+const devMode               = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: [__dirname + "/../entry.js"],
@@ -8,7 +20,9 @@ module.exports = {
   devtool: "source-map",
   // tells where your webpack-dev-server where to watch for changes
   devServer: {
-    contentBase: __dirname + "/../public/"
+    contentBase: __dirname + "/../public/",
+    host: hostURL,
+    port: hostPORT
   },
   output: {
     // where to put the bundle.js , but to use webpack-dev-server properly
@@ -20,6 +34,7 @@ module.exports = {
     for eg. in your css you have url(./img.jpg) => url(http://mysite.com)
     publicPath: "/",
     */
+
     filename: "assets/js/bundle.js"
   },
   resolve: {
@@ -28,9 +43,12 @@ module.exports = {
   module: {
     rules: [
       {
+        /*
+          Take note ONLY 1 test for file.
+        */
         test: /\.scss$/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
@@ -38,7 +56,10 @@ module.exports = {
             }
           },
           {
-            loader: "resolve-url-loader"
+            loader: "resolve-url-loader",
+            options:{
+              debug: true
+            }
           },
           {
             loader: "postcss-loader",
@@ -62,21 +83,10 @@ module.exports = {
         test: /\.(png|jpg|gif|eot|woff2|svg|ttf|woff)$/,
         loader: "url-loader",
         options: {
-          limit: 5000,
-          name: "img-[hash:6].[ext]",
-          outputPath: "../public/assets/img/",
-          publicPath: "assets/img/"
-        }
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        loader: "file-loader",
-        options: {
-          name: "[path][name].[ext]",
-          // where to put the files
-          outputPath: "../public/assets/img/",
-          // will change the url used by fileloader
-          publicPath: "assets/img/"
+          limit: 2000,
+          outputPath: "assets/img/",// Where to put any resource file
+          publicPath: "../img/",    // This will change the URL for the CSS. As the URL in css is relative to the CSS file itself not the document.
+          fallback: "file-loader"   // Will encode any files lower than 2KB = 2000 otherwise use FILE-LOADER which should be installed as well and will pass the same OPTIONS to the fallback.
         }
       },
       {
