@@ -2,16 +2,18 @@
     WEBPACK CONFIGURATION VARIABLES
 */
 // ========================================================
-// DEVELOPER TO CHANGE 
+// DEVELOPER TO CHANGE
 // ========================================================
 
-const hostURL  = "192.168.70.22";
-const hostPORT = "8080";
+const hostURL = "localhost";
+const hostPORT = "8585";
 
 //- -------------------------------------------------------
 
-const MiniCssExtractPlugin  = require("mini-css-extract-plugin");
-const devMode               = process.env.NODE_ENV !== "production";
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: [__dirname + "/../entry.js"],
@@ -35,10 +37,13 @@ module.exports = {
     publicPath: "/",
     */
 
-    filename: "assets/js/bundle.js"
+    filename: "assets/js/bundle[hash].js"
   },
   resolve: {
     extensions: [".js", ".jsx"]
+  },
+  optimization: {
+    minimizer: [new OptimizeCSSAssetsPlugin({})]
   },
   module: {
     rules: [
@@ -57,7 +62,7 @@ module.exports = {
           },
           {
             loader: "resolve-url-loader",
-            options:{
+            options: {
               debug: true
             }
           },
@@ -84,9 +89,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 2000,
-          outputPath: "assets/img/",// Where to put any resource file
-          publicPath: "../img/",    // This will change the URL for the CSS. As the URL in css is relative to the CSS file itself not the document.
-          fallback: "file-loader"   // Will encode any files lower than 2KB = 2000 otherwise use FILE-LOADER which should be installed as well and will pass the same OPTIONS to the fallback.
+          outputPath: "assets/img/", // Where to put any resource file
+          publicPath: "../img/", // This will change the URL for the CSS. As the URL in css is relative to the CSS file itself not the document.
+          fallback: "file-loader" // Will encode any files lower than 2KB = 2000 otherwise use FILE-LOADER which should be installed as well and will pass the same OPTIONS to the fallback.
         }
       },
       {
@@ -102,7 +107,11 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "assets/css/[name].css"
+      filename: "assets/css/style[hash].css"
+    }),
+    new HtmlWebpackPlugin({
+      template: __dirname + "/../src/index.html",
+      inject: "body"
     })
   ]
 };
