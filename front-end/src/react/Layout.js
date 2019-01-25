@@ -5,7 +5,7 @@ class Layout extends Component {
     return <div>
       Hello world up! 
         <div className="extra">
-          Extra layout here Hello again
+          Hey there
         </div>
       </div>;
   }

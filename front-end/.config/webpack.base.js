@@ -29,7 +29,7 @@ module.exports = {
   output: {
     // where to put the bundle.js , but to use webpack-dev-server properly
     // use the path to public and just change the filename: to /path/bundle.js
-    path: __dirname + "/../public/",
+    path: __dirname + "../public/",
     /* 
     used by plugins , mainly for production.
     publicPath: "http://mysite.com/"
@@ -99,7 +99,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
         query: {
-          presets: ["react", "env"],
+          presets: ["@babel/preset-env", "@babel/preset-react","@babel/preset-flow"],
           plugins: []
         }
       }
