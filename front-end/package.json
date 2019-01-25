@@ -4,7 +4,7 @@
   "description": "React SPA boilerplate",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=development&&webpack-dev-server --mode development --config ./.config/webpack.base.js",
+    "dev": "set NODE_ENV=development&&webpack-dev-server --mode development --config ./.config/webpack.base.js --hot --inline",
     "build": "set NODE_ENV=production&&webpack --mode production  --config ./.config/webpack.base.js",
     "test": "jest --watch"
   },
@@ -36,6 +36,6 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "3.1.0"
   }
 }

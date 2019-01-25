@@ -1,3 +1,4 @@
+
 /*
     WEBPACK CONFIGURATION VARIABLES
 */
@@ -22,17 +23,23 @@ module.exports = {
   devtool: "source-map",
   // tells where your webpack-dev-server where to watch for changes
   devServer: {
-    contentBase: __dirname + "/../public/",
+    /*
+     BUG NOTE: "webpack-dev-server": "3.1.0"  Do not update this version in the package.json. Until fixed.
+          Description: If you use later/latest version of the webpackdevserver. You will get an error of "cannot /get" when you are using webpackdevserver
+     */
+    contentBase:[__dirname+"/../public/"],
     host: hostURL,
     port: hostPORT
   },
   output: {
     // where to put the bundle.js , but to use webpack-dev-server properly
     // use the path to public and just change the filename: to /path/bundle.js
-    path: __dirname + "../public/",
+    path: __dirname + "/../public/",
     /* 
+    --------
     used by plugins , mainly for production.
     publicPath: "http://mysite.com/"
+    --------
     for eg. in your css you have url(./img.jpg) => url(http://mysite.com)
     publicPath: "/",
     */
