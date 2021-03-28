@@ -14,7 +14,7 @@ const hostPORT = "8585";
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const devMode = process.env.NODE_ENV !== "production";
+// const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: [__dirname + "/../entry.js"],
@@ -23,10 +23,6 @@ module.exports = {
   devtool: "source-map",
   // tells where your webpack-dev-server where to watch for changes
   devServer: {
-    /*
-     BUG NOTE: "webpack-dev-server": "3.1.0"  Do not update this version in the package.json. Until fixed.
-          Description: If you use later/latest version of the webpackdevserver. You will get an error of "cannot /get" when you are using webpackdevserver
-     */
     contentBase:[__dirname+"/../public/"],
     host: hostURL,
     port: hostPORT
@@ -39,9 +35,6 @@ module.exports = {
     --------
     used by plugins , mainly for production.
     publicPath: "http://mysite.com/"
-    --------
-    for eg. in your css you have url(./img.jpg) => url(http://mysite.com)
-    publicPath: "/",
     */
 
     filename: "assets/js/bundle[hash].js"
@@ -76,7 +69,9 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              plugins: () => [require("autoprefixer")]
+              postcssOptions:{
+                plugins: () => [require("autoprefixer")]
+              }
             }
           },
           {
@@ -89,7 +84,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader!resolve-url-loader"
+        use: ["style-loader","css-loader","resolve-url-loader"]
       },
       {
         test: /\.(png|jpg|gif|eot|woff2|svg|ttf|woff)$/,
@@ -105,7 +100,7 @@ module.exports = {
         test: /\.js?$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-        query: {
+        options: {
           presets: ["@babel/preset-env", "@babel/preset-react","@babel/preset-flow"],
           plugins: []
         }
